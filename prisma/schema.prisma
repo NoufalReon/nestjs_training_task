@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model demo1 {
+  car_id      Int        @id @default(autoincrement())
+  car_name    String     @db.VarChar(100)
+  car_created DateTime   @db.DateTime(0)
+  car_updated DateTime   @db.DateTime(0)
+  car_type    String     @db.VarChar(100)
+  customer    customer[]
+}
+
+model demo2 {
+  bike_id      Int      @id @default(autoincrement())
+  bike_name    String   @db.VarChar(100)
+  bike_created DateTime @db.DateTime(0)
+  bike_updated DateTime @db.DateTime(0)
+  bike_type    String   @db.VarChar(100)
+}
+
+model customer {
+  customer_id      Int      @id @default(autoincrement())
+  Customer_name    String   @db.VarChar(100)
+  cust_car_id      Int
+  cutomer_updated  DateTime @db.DateTime(0)
+  customer_created DateTime @db.DateTime(0)
+  demo1            demo1    @relation(fields: [cust_car_id], references: [car_id], map: "customer_ibfk_1")
+
+  @@index([cust_car_id], map: "cust_car_id")
+}
+
+model car_1_data {
+  Car_1_id      Int      @id @default(autoincrement())
+  car_1_name    String   @db.VarChar(100)
+  car_1_created DateTime @db.DateTime(0)
+  car_1_updated DateTime @db.DateTime(0)
+  car_1_type    String   @db.VarChar(100)
+  car_1_img     String   @db.VarChar(500)
+  car_1_price   Int
+}
